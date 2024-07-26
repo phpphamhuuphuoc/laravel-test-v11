@@ -1,0 +1,31 @@
+.font-manrope {
+    font-family: "Manrope", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: normal;
+    font-style: normal;
+}
+html {
+    body {
+        @apply font-manrope;
+    }
+}
+@screen lg {
+    .modal .modal-dialog.modal-2xl {
+        width: 1200px;
+    }
+}
+.dropdown-menu.show > .dropdown-content {
+    margin-top: 1rem;
+}
+
+.list-size-design .w-8\/12{
+    width: 65.666667%;
+}
+
+.list-size-design .w-6\/12{
+    width: 49%;
+}
+
+.list-size-design .w-4\/12{
+    width: 32%;
+}

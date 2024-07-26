@@ -1,0 +1,10 @@
+import SampleIndex from '../../../components/item/sample/Index.vue';
+import SampleCreate from '../../../components/item/sample/Create.vue';
+import SampleEdit from '../../../components/item/sample/Edit.vue';
+const routeSample = [
+    { path: '/cms/item/sample', component: SampleIndex, name: 'cms.item.sample.index' },
+    { path: '/cms/item/sample/create', component: SampleCreate, name: 'cms.item.sample.create' },
+    { path: '/cms/item/sample/edit/:id', component: SampleEdit, name: 'cms.item.sample.edit', props: true }
+]
+
+export default routeSample;
