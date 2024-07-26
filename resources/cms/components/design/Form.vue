@@ -574,6 +574,7 @@ export default {
             }, 2000);
         },
         store(exit) {
+
             let that = this;
             let data = {
                 title: this.data.title,
@@ -582,7 +583,7 @@ export default {
                 data: this.fields,
             }
             axios
-                .post(`${this.baseURL}/cms/api/design/`, data)
+                .post(`${this.baseURL}/cms/api/design`, data)
                 .then((response) => {
                     console.log('Response from server:', response.data);
                     if (response.data.success == true) {
