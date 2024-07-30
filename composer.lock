@@ -2459,12 +2459,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpphamhuuphuoc/laravel-cms.git",
-                "reference": "27020dd1caea5f948724d67e4985dad5b4c703fb"
+                "reference": "1f04b1e8835fabdadf3f2c707c4d146d5b3e7fe5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpphamhuuphuoc/laravel-cms/zipball/27020dd1caea5f948724d67e4985dad5b4c703fb",
-                "reference": "27020dd1caea5f948724d67e4985dad5b4c703fb",
+                "url": "https://api.github.com/repos/phpphamhuuphuoc/laravel-cms/zipball/1f04b1e8835fabdadf3f2c707c4d146d5b3e7fe5",
+                "reference": "1f04b1e8835fabdadf3f2c707c4d146d5b3e7fe5",
                 "shasum": ""
             },
             "require": {
@@ -2491,7 +2491,7 @@
                 "source": "https://github.com/phpphamhuuphuoc/laravel-cms/tree/main",
                 "issues": "https://github.com/phpphamhuuphuoc/laravel-cms/issues"
             },
-            "time": "2024-07-26T15:39:46+00:00"
+            "time": "2024-07-26T17:01:46+00:00"
         },
         {
             "name": "phpoption/phpoption",

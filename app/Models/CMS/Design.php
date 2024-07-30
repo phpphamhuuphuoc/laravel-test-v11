@@ -37,6 +37,7 @@ class Design extends Model
 
     public function updateDesign($oldData, $newData){
         $tmp = $oldData->replicate();
+        $tmp->id = $oldData->id;
         $oldData->fill($newData);
         $oldData->save();
         if($oldData and $newData['type'] == 'module'){

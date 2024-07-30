@@ -93,13 +93,13 @@
                             </template> -->
                             
                             <td class="px-5 border-b dark:border-darkmode-300 py-4 border-dashed dark:bg-darkmode-600">
-                                <div class="whitespace-nowrap">{{ item.title }}</div>
+                                <a :href="this.baseURL + '/cms/item/sample/edit/' + item.id">{{ item.title }}</a>
                             </td>
                             <td class="px-5 border-b dark:border-darkmode-300 py-4 border-dashed dark:bg-darkmode-600">
-                                <div class="whitespace-nowrap">{{ item.slug }}</div>
+                                <div class="whitespace-nowrap w-40 text-ellipsis overflow-hidden">{{ item.slug }}</div>
                             </td>
                             <td class="px-5 border-b dark:border-darkmode-300 py-4 border-dashed dark:bg-darkmode-600">
-                                <div class="whitespace-nowrap">{{ item.desc }}</div>
+                                <div class="whitespace-nowrap w-40 text-ellipsis overflow-hidden">{{ item.desc }}</div>
                             </td>
                             <td class="px-5 border-b dark:border-darkmode-300 py-4 border-dashed dark:bg-darkmode-600">
                                 <img class="w-16" :src="item.thumbnail" alt="">
@@ -313,6 +313,8 @@ export default {
                 that.destroy(value);
             });
             this.showNotificationSticky();
+            this.selectedItems = [];
+            this.show.actionBulkTable = false;
         },
         toggleModalDestroy() {
             this.show.deleteModalPreview = !this.show.deleteModalPreview;

@@ -31,19 +31,13 @@
                         <tr class="">
                             <td
                                 class="px-5 border-b dark:border-darkmode-300 w-5 py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                <!-- <input type="checkbox" @click="selectedAllItem()"
-                                    class="transition-all duration-100 ease-in-out shadow-sm border-slate-300/80 cursor-pointer rounded focus:ring-4 focus:ring-offset-0 focus:ring-primary focus:ring-opacity-20 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;[type='radio']]:checked:bg-primary/60 [&amp;[type='radio']]:checked:border-primary/50 [&amp;[type='radio']]:checked:border-opacity-10 [&amp;[type='checkbox']]:checked:bg-primary/60 [&amp;[type='checkbox']]:checked:border-primary/50 [&amp;[type='checkbox']]:checked:border-opacity-10 [&amp;:disabled:not(:checked)]:bg-slate-100 [&amp;:disabled:not(:checked)]:cursor-not-allowed [&amp;:disabled:not(:checked)]:dark:bg-darkmode-800/50 [&amp;:disabled:checked]:opacity-70 [&amp;:disabled:checked]:cursor-not-allowed [&amp;:disabled:checked]:dark:bg-darkmode-800/50"> -->
+                                <button v-if="show.saveOrder" @click="updateOrder()" class="text-xs transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed border-secondary text-slate-500 dark:border-darkmode-100/40 dark:text-slate-300 [&:hover:not(:disabled)]:bg-secondary/20 [&:hover:not(:disabled)]:dark:bg-darkmode-100/10 cursor-pointer w-full sm:w-auto">
+                                    Lưu
+                                </button>
                             </td>
                             <td
                                 class="px-5 border-b dark:border-darkmode-300 py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                <template v-if="!show.actionBulkTable">
                                     Tiêu đề
-                                </template>
-                                <template v-else>
-                                    <button @click="toggleModalDestroy()" class="text-xs transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&:hover:not(:disabled)]:bg-opacity-90 [&:hover:not(:disabled)]:border-opacity-90 [&:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed border-secondary text-slate-500 dark:border-darkmode-100/40 dark:text-slate-300 [&:hover:not(:disabled)]:bg-secondary/20 [&:hover:not(:disabled)]:dark:bg-darkmode-100/10 cursor-pointer w-full sm:w-auto">
-                                        Xoá tất cả
-                                    </button>
-                                </template>
                             </td>
                             <td
                                 class="px-5 border-b dark:border-darkmode-300 py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
@@ -201,17 +195,19 @@
         </div>
         </ModalBody>
     </Modal>
-    <NotificationSticky ref="notificationSticky" :message="'Xoá thành công'" :type="'success'"></NotificationSticky>
+    <NotificationSticky ref="notificationSticky" :message="this.notificationSticky.message" :type="this.notificationSticky.type"></NotificationSticky>
 </template>
 
 <script>
 import axios from "axios";
 import NotificationSticky from '../global/NotificationSticky.vue'
+import NotificationStickyError from '../global/NotificationSticky.vue'
 import {getRouteIndex} from '../../helper/URL'
 import { reactive } from 'vue';
 export default {
     components: {
         NotificationSticky,
+        NotificationStickyError,
     },
     inject: ["baseURL"],
     data() {
@@ -231,41 +227,45 @@ export default {
                 actionBulkTable: false,
                 deleteModalPreview: false,
                 isFilter: false,
+                saveOrder: false,
             },
             isDragging: false,
-      dragData: null,
-      dragOverData: null,
+            dragData: null,
+            dragOverData: null,
+            notificationSticky: {
+                type: null,
+                message: null,
+            },
         };
     },
     methods: {
         onDragStart(event, rowIndex) {
-      this.isDragging = true;
-      this.dragData = { rowIndex };
-      event.dataTransfer.setData('text/plain', ''); // Thiết lập để hỗ trợ kéo thả
-    },
-    onDragOver(event, rowIndex) {
-        console.log(rowIndex);
-      if (this.isDragging) {
-        event.preventDefault();
-        this.dragOverData = { rowIndex };
-      }
-    },
-    onDrop(event) {
-      if (this.isDragging && this.dragData && this.dragOverData) {
-        const { rowIndex: fromRowIndex } = this.dragData;
-        const { rowIndex: toRowIndex } = this.dragOverData;
+            this.isDragging = true;
+            this.dragData = { rowIndex };
+            event.dataTransfer.setData('text/plain', ''); // Thiết lập để hỗ trợ kéo thả
+        },
+        onDragOver(event, rowIndex) {
+            if (this.isDragging) {
+                event.preventDefault();
+                this.dragOverData = { rowIndex };
+            }
+        },
+        onDrop(event) {
+            if (this.isDragging && this.dragData && this.dragOverData) {
+                const { rowIndex: fromRowIndex } = this.dragData;
+                const { rowIndex: toRowIndex } = this.dragOverData;
 
-        if (fromRowIndex !== toRowIndex) {
-          const fromItem = this.data[fromRowIndex];
-          this.data.splice(fromRowIndex, 1);
-          this.data.splice(toRowIndex, 0, fromItem);
+                if (fromRowIndex !== toRowIndex) {
+                const fromItem = this.data[fromRowIndex];
+                this.data.splice(fromRowIndex, 1);
+                this.data.splice(toRowIndex, 0, fromItem);
+            }
         }
-      }
 
-      this.isDragging = false;
-      this.dragData = null;
-      this.dragOverData = null;
-    },
+        this.isDragging = false;
+        this.dragData = null;
+        this.dragOverData = null;
+        },
         selectedAllItem() {
             let that = this;
             var dataTable = this.$refs.dataTable;
@@ -291,18 +291,41 @@ export default {
             this.selectedItems.forEach(function(value){
                 that.destroy(value);
             });
-            this.showNotificationSticky();
+            this.showNotificationSticky(null, null);
         },
         toggleModalDestroy() {
             this.show.deleteModalPreview = !this.show.deleteModalPreview;
         },
-        showNotificationSticky() {
-            this.$refs.notificationSticky.show();
+        showNotificationSticky(type, message) {
+            console.log(type, message);
+            this.notificationSticky.type = type;
+            this.notificationSticky.message = message;
+            if(type != null && message != null){
+                this.$refs.notificationSticky.show();
+            }
         },
 
 
-
-
+        updateOrder(){
+            let that = this;
+            if (this.data.length > 0) {
+                this.data.forEach(function(element, index){
+                    axios
+                        .put(`${that.baseURL}/${that.route.nameAPI}/${element.id}`, { order: index })
+                        .then((response) => {
+                            if (response.data.success) {
+                                that.showNotificationSticky('success', response.data.message);
+                            } else {
+                                that.showNotificationStickyError('error', response.data.message);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error response:', error);
+                            that.showNotificationStickyError('success', error);
+                        });
+                });
+            }
+        },
         load() {
             console.log(this.route);
             axios
@@ -349,8 +372,13 @@ export default {
             this.getRoute(to)
             this.load();
         },
-        list(newValue, oldValue){
-            console.log(newValue);
+        data: {
+            handler(newValue, oldValue) {
+                if(oldValue.length > 0){
+                    this.show.saveOrder = true;
+                }
+            },
+            deep: true
         }
     },
 };

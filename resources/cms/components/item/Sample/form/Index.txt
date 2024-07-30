@@ -1,7 +1,9 @@
 <template>
     <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row mt-5">
         <div class="text-2xl font-medium group-[.mode--light]:text-white">Sample</div>
+        <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto"><a href="/cms/item/sample/create" class="transition duration-200 border shadow-sm inline-flex items-center justify-center py-2 px-3 rounded-md font-medium cursor-pointer focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus-visible:outline-none dark:focus:ring-slate-700 dark:focus:ring-opacity-50 [&amp;:hover:not(:disabled)]:bg-opacity-90 [&amp;:hover:not(:disabled)]:border-opacity-90 [&amp;:not(button)]:text-center disabled:opacity-70 disabled:cursor-not-allowed bg-primary border-primary text-white dark:border-primary group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"> Test Email</a></div>
     </div>
+    <div class="text-slate-500 text-xs mt-2"> POST: <span class="underline">cms/api/item/sample</span> </div>
     <div class="ring-opacity-5 shadow mt-5 flex flex-col box box--stacked rounded-xl shadow-md overflow-hidden">
         <div id="filter-section" class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2 border-b border-dashed">
             <template v-if="show.actionBulkTable">
@@ -18,7 +20,7 @@
                         <circle cx="11" cy="11" r="8"></circle>
                         <path d="m21 21-4.3-4.3"></path>
                     </svg>
-                    <input @input="setFilter(this.paginate.currentPage)" v-model="filters.title" type="text" placeholder="Tìm kiếm..."
+                    <input @input="setFilter(this.paginate.currentPage)" v-model="filters.email" type="text" placeholder="Tìm kiếm..."
                         class="disabled:bg-slate-100 disabled:cursor-not-allowed dark:disabled:bg-darkmode-800/50 dark:disabled:border-transparent [&amp;[readonly]]:bg-slate-100 [&amp;[readonly]]:cursor-not-allowed [&amp;[readonly]]:dark:bg-darkmode-800/50 [&amp;[readonly]]:dark:border-transparent transition duration-200 ease-in-out w-full text-sm border-slate-300/60 shadow-sm placeholder:text-slate-400/90 focus:ring-4 focus:ring-primary focus:ring-opacity-20 focus:border-primary focus:border-opacity-40 dark:bg-darkmode-800 dark:border-transparent dark:focus:ring-slate-700 dark:focus:ring-opacity-50 dark:placeholder:text-slate-500/80 pl-9 sm:w-64 rounded-[0.5rem]">
                      
                 </div>
@@ -233,7 +235,7 @@ export default {
             },
             filters: {
                 page: null,
-                title: null,
+                email: null,
             },
             selectedItems: [],
             show :{
@@ -287,6 +289,8 @@ export default {
                 that.destroy(value);
             });
             this.showNotificationSticky();
+            this.selectedItems = [];
+            this.show.actionBulkTable = false;
         },
         toggleModalDestroy() {
             this.show.deleteModalPreview = !this.show.deleteModalPreview;

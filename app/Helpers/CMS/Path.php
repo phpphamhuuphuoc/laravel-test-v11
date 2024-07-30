@@ -75,12 +75,21 @@ function pathModelCategorySample() {
     );
 }
 
-function pathModelItemSample() {
+function pathModelItemSample($type) {
+    $fileModelSample = 'SampleModelItem.txt';
+    switch ($type) {
+        case 'form':
+            $fileModelSample = 'SampleModelItemForm.txt';
+            break;
+        default:
+            $fileModelSample = 'SampleModelItem.txt';
+            break;
+    }
     return (
         pathModel() . 
         'Sample' . 
         directorySeparator() . 
-        'SampleModelItem.txt'
+        $fileModelSample
     );
 }
 

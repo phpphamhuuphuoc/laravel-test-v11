@@ -13,7 +13,7 @@
                 <div class="flex flex-wrap gap-4 list-size-design">
                     <div class="w-full">
                         <div class="input-form">
-                            <label for="email" class="form-label">Email</label>
+                            <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
                             <input v-model="form.email" name="email" id="email" maxlength="255" class="form-control" placeholder="Email" readonly>
                         </div>
                     </div>

@@ -26,8 +26,20 @@
                                         <div class="flex flex-wrap gap-4 list-size-design">
                                             <div class="w-full">
                                                 <div class="input-form">
-                                                    <label for="email" class="form-label">Email</label>
-                                                    <input v-model="form.email" name="email" id="email" maxlength="255" class="form-control" placeholder="Email" readonly>
+                                                    <label for="email" class="form-label">Email<span class="text-danger">*</span></label>
+                                                    <input v-model="form.email" name="email" id="email" maxlength="255" class="form-control" placeholder="Email">
+                                                </div>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="input-form">
+                                                    <label for="title" class="form-label">Tiêu đề</label>
+                                                    <input v-model="form.title" name="title" id="title" maxlength="255" class="form-control" placeholder="Title" >
+                                                </div>
+                                            </div>
+                                            <div class="w-full">
+                                                <div class="input-form">
+                                                    <label for="content" class="form-label">Nội dung</label>
+                                                    <textarea v-model="form.content" name="content" id="content" rows="5" placeholder="Nội dung" class="form-control" ></textarea>
                                                 </div>
                                             </div>
                                             <div class="w-full">
@@ -85,7 +97,9 @@ export default {
             },
             errors: {},
             form: {
+                title: null,
                 email: null,
+                content: null,
                 admin_comment: null,
             },
             design: [],

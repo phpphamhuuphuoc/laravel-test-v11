@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('top_position')->default(false);
             $table->json('modules')->nullable();
             $table->boolean('is_homepage')->default(false);
+            $table->integer('order')->nullable();
             $table->foreignId('parent_id')->nullable()->constrained(table: 'cms_pages')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('handle_id')->nullable()->constrained(table: 'cms_categories')->onUpdate('cascade')->onDelete('set null');
             $table->foreignId('seo_id')->nullable()->constrained(table: 'cms_seo_settings')->onUpdate('cascade')->onDelete('set null');

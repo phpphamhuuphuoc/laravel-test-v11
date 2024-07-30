@@ -23,4 +23,9 @@ class NewsController extends Controller
         $data = $category->items();
         return view('frontend.templates.news.index', compact('page', 'modules', 'category', 'data'));
     }
+    public function detail($item){
+        $category = $item->category();
+        return view('frontend.templates.news.detail', compact('item', 'category'));
+
+    }
 }

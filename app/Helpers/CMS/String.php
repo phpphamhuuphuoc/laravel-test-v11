@@ -41,3 +41,24 @@ function slugify($string) {
 function removeNonAscii($string) {
     return iconv('UTF-8', 'ASCII//IGNORE', $string);
 }
+
+function createAbbreviation($title) {
+    // Tách tên thành các từ
+    $words = explode('-', $title); // Tách dựa trên dấu gạch ngang
+
+    // Tạo viết tắt bằng cách lấy ký tự đầu của mỗi từ
+    $abbreviation = '';
+    foreach ($words as $word) {
+        $abbreviation .= substr($word, 0, 1); // Lấy ký tự đầu tiên của mỗi từ
+    }
+
+    return strtolower($abbreviation); // Chuyển đổi thành chữ thường
+}
+
+function linkCollection($collection){
+    if($collection->category() and $collection->slug){
+        $category = slugify($collection->category()->title);
+        return $collection->slug . "-" . $category . $collection->category()->id;
+    }
+    return "";
+}

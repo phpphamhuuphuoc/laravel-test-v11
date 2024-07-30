@@ -16,6 +16,20 @@ use App\Http\Controllers\CMS\API\TemplateController;
 use App\Models\CMS\Page;
 // Import Below Here
 
+
+use App\Http\Controllers\CMS\API\Item\ProductController;
+
+use App\Http\Controllers\CMS\API\Item\PostController;
+
+use App\Http\Controllers\CMS\API\Item\ContactController;
+
+use App\Http\Controllers\CMS\API\Item\TestController;
+
+use App\Http\Controllers\CMS\API\Item\CollectionTestController;
+
+use App\Http\Controllers\CMS\API\Item\TestCollectionController;
+use App\Models\CMS\Category;
+
 // const BREAKPOINT_USE = 'DO NOT DELETE OR MOVE';
 
 
@@ -25,14 +39,38 @@ $pages = Page::with('template')->get();
 
 // Đăng ký route cho từng trang
 foreach ($pages as $page) {
-    if ($page->is_homepage) {
+    if ($page->template_id == 3) {
         Route::get('/', function () use ($page) {
             return dispatchPage($page);
         })->name('cms.page.home');
-    } else {
+    }else if($page->template_id == 5) {
+
+        Route::get("/{$page->slug}", function () use ($page) {
+            return dispatchPage($page);
+        })->name("cms.page.{$page->slug}");
+        Route::post("/{$page->slug}/store", function () use ($page) {
+            return dispatchPageContact($page);
+        })->name("cms.page.{$page->slug}.store");
+
+    }else if($page->template_id == 6) {
+
+        Route::get("/{$page->slug}", function () use ($page) {
+            return dispatchPage($page);
+        })->name("cms.page.{$page->slug}");
+        $category = Category::findOrFail($page->handle_id);
+        $slugCategory = slugify($category->title);
+        Route::get("/{itemSlug}-{$slugCategory}{categoryId}", function ($itemSlug, $categoryId) use ($page) {
+            return dispatchItemPage($itemSlug, $categoryId, $page);
+        })->where([
+            'itemSlug' => '.*', // Cho phép slug dài và có dấu gạch nối
+            'parentId' => '[0-9]+' // ID của danh mục cha là số
+        ])->name('cms.page.item');
+
+    }
+    else {
         Route::get('/' . $page->slug, function () use ($page) {
             return dispatchPage($page);
-        })->name('cms.page.'.$page->slug);
+        })->name("cms.page.item");
     }
 }
 
@@ -53,6 +91,50 @@ Route::prefix('cms/api')->name('cms.api.')->group(function () {
     ]);
 
 
+
+Route::name('item.')->prefix('item')->group(function () {
+    Route::get('product/category', [ProductController::class, 'category'])->name('product.category');
+    Route::apiResources([
+        'product' => ProductController::class,
+    ]);
+});
+
+Route::name('item.')->prefix('item')->group(function () {
+    Route::get('post/category', [PostController::class, 'category'])->name('post.category');
+    Route::apiResources([
+        'post' => PostController::class,
+    ]);
+});
+
+Route::name('item.')->prefix('item')->group(function () {
+    Route::get('contact/category', [ContactController::class, 'category'])->name('contact.category');
+    Route::post('contact/store-and-send-mail', [ContactController::class, 'storeAndSendMail'])->name('contact.store-and-send-mail');
+    Route::apiResources([
+        'contact' => ContactController::class,
+    ]);
+});
+
+Route::name('item.')->prefix('item')->group(function () {
+    Route::get('test/category', [TestController::class, 'category'])->name('test.category');
+    Route::post('test/store-and-send-mail', [TestController::class, 'storeAndSendMail'])->name('test.store-and-send-mail');
+    Route::apiResources([
+        'test' => TestController::class,
+    ]);
+});
+
+Route::name('item.')->prefix('item')->group(function () {
+    Route::get('collection-test/category', [CollectionTestController::class, 'category'])->name('collection-test.category');
+    Route::apiResources([
+        'collection-test' => CollectionTestController::class,
+    ]);
+});
+
+Route::name('item.')->prefix('item')->group(function () {
+    Route::get('test-collection/category', [TestCollectionController::class, 'category'])->name('test-collection.category');
+    Route::apiResources([
+        'test-collection' => TestCollectionController::class,
+    ]);
+});
 // const BREAKPOINT_ROUTE = 'DO NOT DELETE OR MOVE';
 });
 

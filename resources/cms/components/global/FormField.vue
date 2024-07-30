@@ -1,6 +1,6 @@
 <template>
     <div class="input-form" v-if="attrHTML.type != 'repeater'">
-        <label :for="attrHTML.name" class="form-label">{{ attrHTML.label }}</label>
+        <label :for="attrHTML.name" class="form-label">{{ attrHTML.label }}<span v-if="attrHTML.required" class="text-danger">*</span></label>
 
         <!-- Input -->
         <input
@@ -95,7 +95,7 @@
                         class="flex items-center pb-5 text-base font-medium border-b border-dashed border-slate-200/60 dark:border-darkmode-400">
                         {{ attrHTML.label }} {{ index + 1 }}
                         <svg @click="toggleHidden(index)" :class="{ 'rotate-180': hiddenIndexes.includes(index)}" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up ml-auto hover:ring-4 rounded-full"><path d="m18 15-6-6-6 6"/></svg>
-                        <svg v-if="index > 0" @click="removeFieldRepeater(attrHTML, index)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x ml-2 hover:ring-4 rounded-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                        <svg @click="removeFieldRepeater(attrHTML, index)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x ml-2 hover:ring-4 rounded-full"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                     </div>
                     <div class="mt-5" :class="{ 'hidden': hiddenIndexes.includes(index) }">
                         <div class="flex-wrap gap-4 list-size-design flex">

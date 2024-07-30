@@ -34,17 +34,23 @@ class Category extends Model
         }
     }
 
+    public function design(): BelongsTo
+    {
+        return $this->belongsTo(Design::class, 'design_id');
+    }
+
+
     public static function storeCategory($data)
     {
         $data = Category::create($data);
         // Create Migrate Table && Model && Relationship Fake Child
         InitMigration::init($data, true);
-        $item_class = InitModel::init($data->title, true);
-        InitModel::initRelationship($data->title, $data->id, true);
+        $item_class = InitModel::init($data, true);
+        InitModel::initRelationship($data, $data->id, true);
 
         // Create Model && Relationship Fake Parent
-        InitModel::init($data->title, false);
-        InitModel::initRelationship($data->title, $data->category_type_id, false);
+        InitModel::init($data, false);
+        InitModel::initRelationship($data, $data->category_type_id, false);
 
 
         // Create Mail If Category Type Form

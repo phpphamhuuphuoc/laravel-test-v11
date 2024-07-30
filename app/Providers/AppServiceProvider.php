@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->loadRoutesFrom(base_path('routes/web_cms.php'));
         View::share('globalData', [
-            'menu' => Page::where('parent_id', NULL)->with('childrens')->get(),
+            'menu' => Page::where('parent_id', NULL)->with('childrens')->orderBy('order')->get(),
         ]);
     }
 }

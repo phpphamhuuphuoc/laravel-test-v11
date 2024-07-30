@@ -34,7 +34,8 @@
             "app/Helpers/CMS/Dispatch.php",
             "app/Helpers/CMS/File.php",
             "app/Helpers/CMS/Path.php",
-            "app/Helpers/CMS/String.php"
+            "app/Helpers/CMS/String.php",
+            "app/Helpers/CMS/Global.php"
         ]
     },
     "autoload-dev": {

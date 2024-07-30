@@ -14,6 +14,14 @@ import routeOther from './category/other/main.js';
 // -------------------
 
 
+
+import routeProduct from './item/product/main.js'
+
+import routePost from './item/post/main.js'
+
+import routeContact from './item/contact/main.js'
+
+import routeTestCollection from './item/test-collection/main.js'
 // CONST BREAKPOINT_IMPORT = true;
 const routes = [
   { path: '/cms/', component: CollectionIndex, name: 'home' },
@@ -29,6 +37,14 @@ routes.push(...routeGlobal);
 routes.push(...routeNavigation);
 routes.push(...routeOther);
 
+
+routes.push(...routeProduct);
+
+routes.push(...routePost);
+
+routes.push(...routeContact);
+
+routes.push(...routeTestCollection);
 // CONST BREAKPOINT_PUSH = true;
 
 

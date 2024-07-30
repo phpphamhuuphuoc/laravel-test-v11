@@ -574,7 +574,6 @@ export default {
             }, 2000);
         },
         store(exit) {
-
             let that = this;
             let data = {
                 title: this.data.title,

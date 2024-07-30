@@ -56,7 +56,7 @@
             <nav class="side-nav">
                 <a href="" class="intro-x flex items-center pl-5 pt-4">
                     <!-- {{-- <img alt="Midone - HTML Admin Template" class="w-6" > --}} -->
-                    <span class="hidden xl:block text-white text-lg ml-3"> Rubick </span> 
+                    <span class="hidden xl:block text-white text-lg ml-3"> RC </span> 
                 </a>
                 <div class="side-nav__devider my-6"></div>
                 <ul>
@@ -67,7 +67,7 @@
                         </a>
                         <ul class="side-menu__sub-open">
                             <li v-for="item in data" :key="item">
-                                <router-link :to="{ name: `cms.${item.type}.index` }" class="side-menu">
+                                <router-link :to="{ name: `cms.${item.type}.index` }" class="side-menu"  v-if="item.type == 'collection' || item.type == 'form'">
                                         <div class="side-menu__icon"> <i data-lucide="activity"></i> </div>
                                         <div class="side-menu__title"> {{ item.title }} </div>
                                 </router-link>

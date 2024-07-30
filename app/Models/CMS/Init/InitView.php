@@ -44,7 +44,7 @@ class InitView extends InitBase
 
     public static function updateViewSampleFilename($oldData, $newData)
     {
-        $id = $newData['id'];
+        $id = $oldData['id'];
         $newFileName = parent::view($newData['title']) . "_{$id}.blade.php";
         $oldFileName = parent::view($oldData['title']) . "_{$id}.blade.php";
         $newFilePath = resource_path("views/frontend/modules/sample/{$newFileName}");

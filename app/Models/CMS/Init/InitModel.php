@@ -9,20 +9,20 @@ use Illuminate\Support\Facades\Artisan;
 class InitModel extends InitBase
 {
     use HasFactory;
-    public static function init($title = 'Product Or News', $isChild = false)
+    public static function init($data, $isChild = false)
     {
-        $modelName = parent::model($title, $isChild);
+        $modelName = parent::model($data->title, $isChild);
         $pathMakeMode = 'CMS/' . ($isChild ? 'item/' : 'category/') . $modelName;
         Artisan::call('make:model ' . $pathMakeMode);
         return $pathMakeMode;
     }
-    public static function initRelationship($title = 'Product Or Post', $parentId = 0, $isChild = false){
+    public static function initRelationship($data, $parentId = 0, $isChild = false){
         $content = '';
-        $model = parent::model($title, $isChild);
-        $table = parent::table($title, $isChild);
-        $modelChild = parent::model($title, true);
+        $model = parent::model($data->title, $isChild);
+        $table = parent::table($data->title, $isChild);
+        $modelChild = parent::model($data->title, true);
 
-        $fullPathSample = $isChild ? pathModelItemSample() : pathModelCategorySample();
+        $fullPathSample = $isChild ? pathModelItemSample($data->categoryType->type) : pathModelCategorySample();
         $fullPathSave = ($isChild ? pathModelItemSave() : pathModelCategorySave()) . $model . '.php';
 
         if($isChild){

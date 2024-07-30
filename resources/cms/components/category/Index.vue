@@ -230,6 +230,8 @@ export default {
                 that.destroy(value);
             });
             this.showNotificationSticky();
+            this.selectedItems = [];
+            this.show.actionBulkTable = false;
         },
         toggleModalDestroy() {
             this.show.deleteModalPreview = !this.show.deleteModalPreview;

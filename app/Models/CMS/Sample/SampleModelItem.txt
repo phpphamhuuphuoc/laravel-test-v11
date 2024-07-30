@@ -24,8 +24,8 @@ class SampleModel extends Model
     {
         $query = $this::query();
         // Nếu có điều kiện title được truyền vào từ bên ngoài
-        if (isset($cond['email'])) {
-            $query->where('email', 'like', '%' . $cond['email'] . '%');
+        if (isset($cond['title'])) {
+            $query->where('title', 'like', '%' . $cond['title'] . '%');
         }
         // Kiểm tra nếu cần phân trang
         if (isset($paginate)) {

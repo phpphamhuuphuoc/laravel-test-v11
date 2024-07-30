@@ -29,7 +29,7 @@ class Page extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(Page::class, 'handle_id');
+        return $this->belongsTo(Category::class, 'handle_id');
     }
 
     public function seo(): BelongsTo
@@ -53,6 +53,8 @@ class Page extends Model
         $query->with('template');
         $query->with('category');
 
+        // Sắp xếp theo cột 'order'
+        $query->orderBy('order');
     
         // Phân trang kết quả với số lượng bản ghi mỗi trang là 5
         return $query->paginate(5);
